@@ -1,0 +1,29 @@
+{
+  "name": "interoit/yii2-tips",
+  "description": "interoit base DbOrm.",
+  "license": "MIT",
+  "keywords": [
+    "yii2 tips moydom.ru"
+  ],
+  "authors": [
+    {
+      "name": "Intero",
+      "email": "intero@company.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "symfony/console": ">=3.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.4"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit  -c ./phpunit.xml"
+  },
+  "autoload": {
+    "psr-4": {
+      "interoit\\yii2Tips\\": "src"
+    }
+  }
+}
