@@ -21,6 +21,9 @@
   "scripts": {
     "test": "./vendor/bin/phpunit  -c ./phpunit.xml"
   },
+  "bin": [
+    "yii2tips"
+  ],
   "autoload": {
     "psr-4": {
       "interoit\\yii2Tips\\": "src"
