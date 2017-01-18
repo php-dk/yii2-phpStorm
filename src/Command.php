@@ -2,21 +2,8 @@
 
 namespace interoit\yii2Tips;
 
-use Symfony\Component\Console\Command\Command as BaseCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
-class Command extends BaseCommand
+class Generate
 {
-    protected function configure()
-    {
-        $this
-            ->setName('generate')
-            ->setDescription('upgrade fias JKH')
-            ->setHelp("This command upgrade fias");
-
-    }
-
     public function getGeneratePhpStormMeta($modules)
     {
 
@@ -29,22 +16,23 @@ class Command extends BaseCommand
 namespace PHPSTORM_META {                                // we want to avoid the pollution
     override(  \yii\base\Module::getModule(0),
         map([
-            '. implode(", \n" , $code).'
+            ' . implode(", \n", $code) . '
         ]));     
 }';
+
         return $template;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function create()
     {
         $array = array_merge_recursive(
-            include __DIR__ . '/config/web.php',
-            include __DIR__ . '/config/main.php',
-            include __DIR__ . '/config/main-local.php',
-            include __DIR__ . '/config/web-local.php'
+            include 'config/web.php',
+            include 'config/main.php',
+            include 'config/main-local.php',
+            include 'config/web-local.php'
         );
 
-        @mkdir('./vendor/phpStormTips');
+        @mkdir('vendor/phpStormTips');
         $code /** @lang PHP */ = '<?php
         class Yii {
             /** @var App $app  */

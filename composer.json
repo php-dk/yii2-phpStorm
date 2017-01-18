@@ -12,18 +12,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "symfony/console": ">=3.2"
+    "php": ">=7.0"
   },
-  "require-dev": {
-    "phpunit/phpunit": "5.4"
-  },
-  "scripts": {
-    "test": "./vendor/bin/phpunit  -c ./phpunit.xml"
-  },
-  "bin": [
-    "yii2tips"
-  ],
   "autoload": {
     "psr-4": {
       "interoit\\yii2Tips\\": "src"
