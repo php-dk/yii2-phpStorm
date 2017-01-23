@@ -4,6 +4,19 @@ namespace interoit\yii2Tips;
 
 class Generate
 {
+    protected $saveDir = 'vendor';
+    private $config  = [];
+
+    /**
+     * Generate constructor.
+     * @param string $saveDir
+     */
+    public function __construct($saveDir,array $config)
+    {
+        $this->saveDir = $saveDir;
+        $this->config = $config;
+    }
+
     public function getGeneratePhpStormMeta($modules)
     {
 
@@ -25,14 +38,7 @@ namespace PHPSTORM_META {                                // we want to avoid the
 
     public function create()
     {
-        $array = array_merge_recursive(
-            include 'config/web.php',
-            include 'config/main.php',
-            include 'config/main-local.php',
-            include 'config/web-local.php'
-        );
-
-        @mkdir('vendor/phpStormTips');
+        @mkdir($this->saveDir . '/phpStormTips');
         $code /** @lang PHP */ = '<?php
         class Yii {
             /** @var App $app  */
@@ -46,7 +52,7 @@ namespace PHPSTORM_META {                                // we want to avoid the
 
         $modules = [];
         $property = '';
-        foreach ($array as $name => $item) {
+        foreach ($this->config as $name => $item) {
             if ($name == 'modules') {
                 foreach ($item as $moduleName => $params) {
                     $modules[$moduleName] = $params['class'];
@@ -64,7 +70,7 @@ namespace PHPSTORM_META {                                // we want to avoid the
         }
 
         $code = str_replace('//{code}', $property, $code);
-        fwrite(fopen(__DIR__ . '/vendor/phpStormTips/mock.php', 'w'), $code);
+        fwrite(fopen($this->saveDir . '/phpStormTips/mock.php', 'w'), $code);
 
         fwrite(fopen('.phpstorm.meta.php', 'w'), $this->getGeneratePhpStormMeta($modules));
     }
