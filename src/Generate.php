@@ -60,8 +60,16 @@ namespace PHPSTORM_META {                                // we want to avoid the
             }
             if ($name == 'components') {
                 foreach ($item as $componentName => $data) {
-                    $class = $data['class'] ?? false;
-                    if (!$class) continue;
+                    if (is_callable($data)) {
+                        if ($result = $data()) {
+                            $class = get_class($result);
+                        }
+
+                    } else {
+                        $class = $data['class'] ?? false;
+                    }
+
+                    if (!isset($class) || !$class) continue;
                     $property .= " /** @var $class \$$componentName  */ \n public \$$componentName; \n";
                 }
             }
