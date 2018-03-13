@@ -2,6 +2,7 @@
 
 namespace phpdk\yii2PhpStorm;
 
+use yii\helpers\ArrayHelper;
 
 class Module extends \yii\base\Module
 {
@@ -11,6 +12,18 @@ class Module extends \yii\base\Module
         'web.php',
         'web-local.php',
     ];
+
+    public function getConfigs()
+    {
+        $path = \Yii::$app->basePath;
+
+        return ArrayHelper::merge(
+            require($path . '/../config/main.php'),
+            require($path . '/../config/main-local.php'),
+            require($path . '/../config/web.php'),
+            require($path . '/../config/web-local.php')
+        );
+    }
 
     public function init()
     {

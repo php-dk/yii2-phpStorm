@@ -6,6 +6,10 @@ use yii\console\Controller;
 
 class TipsController extends Controller
 {
+    public function actionIndex()
+    {
+
+    }
 
 
 }
