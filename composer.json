@@ -1,19 +1,19 @@
 {
   "name": "php-dk/yii2-phpstorm",
-  "description": "interoit base DbOrm.",
+  "description": "Yii2 generator tips.",
   "license": "MIT",
   "keywords": [
-    "yii2 tips moydom.ru"
+    "Yii2 generator tips."
   ],
   "authors": [
     {
-      "name": "Intero",
-      "email": "intero@company.com"
+      "name": "Dimajolkin",
+      "email": "dimajolkin@rambler.ru"
     }
   ],
   "require": {
     "php": ">=7.0",
-    "yiisoft/yii2": "2.0.14.1"
+    "yiisoft/yii2": "^2.0"
   },
   "autoload": {
     "psr-4": {
