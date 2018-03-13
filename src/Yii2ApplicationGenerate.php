@@ -2,9 +2,8 @@
 
 namespace phpdk\yii2PhpStorm;
 
-class Generate
+class Yii2ApplicationGenerate
 {
-    protected $saveDir = 'vendor';
     private $config = [];
 
     /**
@@ -12,34 +11,15 @@ class Generate
      * @param string $saveDir
      * @param array $config
      */
-    public function __construct(string $saveDir, array $config)
+    public function __construct(array $config)
     {
-        $this->saveDir = $saveDir;
         $this->config = $config;
-    }
-
-    public function getGeneratePhpStormMeta($modules)
-    {
-
-        $code = [];
-        foreach ($modules as $name => $class) {
-            $code[] = "\"$name\" => $class::class";
-        }
-        $template = '
-<?php
-namespace PHPSTORM_META {                                // we want to avoid the pollution
-    override(  \yii\base\Module::getModule(0),
-        map([
-            ' . implode(", \n", $code) . '
-        ]));     
-}';
-
-        return $template;
     }
 
     protected function getClassTemplate()
     {
-        return /** @lang PHP */ '<?php
+        return /** @lang PHP */
+            '<?php
         class Yii {
             /** @var App $app  */
             public static $app;
@@ -50,20 +30,11 @@ namespace PHPSTORM_META {                                // we want to avoid the
         }
         ';
     }
-
-    public function create()
+    
+    protected function generatePropertyDocComment()
     {
-        @mkdir($this->saveDir . '/phpStormTips');
-        $code = $this->getClassTemplate();
-
-        $modules = [];
         $property = '';
         foreach ($this->config as $name => $item) {
-            if ($name == 'modules') {
-                foreach ($item as $moduleName => $params) {
-                    $modules[$moduleName] = $params['class'];
-                }
-            }
             if ($name == 'components') {
                 foreach ($item as $componentName => $data) {
                     if (is_callable($data)) {
@@ -79,13 +50,23 @@ namespace PHPSTORM_META {                                // we want to avoid the
                     $property .= " /** @var $class \$$componentName  */ \n public \$$componentName; \n";
                 }
             }
-
-
         }
+        
+        return $property;
+    }
 
+
+    public function create(string $dir)
+    {
+        $directory = $dir . '/phpStormTips';
+        if (!file_exists($directory)) {
+            mkdir($dir . '/phpStormTips');
+        }
+        
+        $code = $this->getClassTemplate();
+        $property = $this->generatePropertyDocComment();
+        
         $code = str_replace('//{code}', $property, $code);
-        fwrite(fopen($this->saveDir . '/phpStormTips/mock.php', 'w'), $code);
-
-        fwrite(fopen('.phpstorm.meta.php', 'w'), $this->getGeneratePhpStormMeta($modules));
+        fwrite(fopen($dir . '/phpStormTips/mock.php', 'w'), $code);
     }
 }
