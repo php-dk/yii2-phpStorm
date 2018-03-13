@@ -1,17 +1,18 @@
 <?php
 
-namespace interoit\yii2Tips;
+namespace phpdk\yii2PhpStorm;
 
 class Generate
 {
     protected $saveDir = 'vendor';
-    private $config  = [];
+    private $config = [];
 
     /**
      * Generate constructor.
      * @param string $saveDir
+     * @param array $config
      */
-    public function __construct($saveDir,array $config)
+    public function __construct(string $saveDir, array $config)
     {
         $this->saveDir = $saveDir;
         $this->config = $config;
@@ -36,10 +37,9 @@ namespace PHPSTORM_META {                                // we want to avoid the
         return $template;
     }
 
-    public function create()
+    protected function getClassTemplate()
     {
-        @mkdir($this->saveDir . '/phpStormTips');
-        $code /** @lang PHP */ = '<?php
+        return /** @lang PHP */ '<?php
         class Yii {
             /** @var App $app  */
             public static $app;
@@ -49,6 +49,12 @@ namespace PHPSTORM_META {                                // we want to avoid the
              //{code}
         }
         ';
+    }
+
+    public function create()
+    {
+        @mkdir($this->saveDir . '/phpStormTips');
+        $code = $this->getClassTemplate();
 
         $modules = [];
         $property = '';

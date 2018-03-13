@@ -12,11 +12,12 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "yiisoft/yii2": "2.0.14.1"
   },
   "autoload": {
     "psr-4": {
-      "interoit\\yii2Tips\\": "src"
+      "phpdk\\yii2PhpStorm\\": "src"
     }
   }
 }
