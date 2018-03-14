@@ -38,6 +38,10 @@ return [
   Yii::$app->component->...
   Yii::$app->getModule('...')->...
 ```
+PhpStorm "multiple definitions exist for class"
+To hide this message:
 
+Find a duplicate class file (not created by this generator), for example: vendor/yiisoft/yii/YiiBase.php
+Mark it as a plain text in file context menu.
 
 
