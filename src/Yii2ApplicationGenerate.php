@@ -20,17 +20,17 @@ class Yii2ApplicationGenerate
     {
         return /** @lang PHP */
             '<?php
-        class Yii {
+        class Yii extends \yii\BaseYii  {
             /** @var App $app  */
             public static $app;
         }
         
-        class App {
+        abstract class App extends \yii\base\Application {
              //{code}
         }
         ';
     }
-    
+
     protected function generatePropertyDocComment()
     {
         $property = '';
@@ -51,7 +51,7 @@ class Yii2ApplicationGenerate
                 }
             }
         }
-        
+
         return $property;
     }
 
@@ -62,10 +62,10 @@ class Yii2ApplicationGenerate
         if (!file_exists($directory)) {
             mkdir($dir . '/phpStormTips');
         }
-        
+
         $code = $this->getClassTemplate();
         $property = $this->generatePropertyDocComment();
-        
+
         $code = str_replace('//{code}', $property, $code);
         fwrite(fopen($dir . '/phpStormTips/mock.php', 'w'), $code);
     }
